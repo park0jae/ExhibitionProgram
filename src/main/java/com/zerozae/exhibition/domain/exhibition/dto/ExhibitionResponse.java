@@ -1,9 +1,11 @@
 package com.zerozae.exhibition.domain.exhibition.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zerozae.exhibition.domain.exhibition.entity.Exhibition;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.lang.Nullable;
 
 import java.time.LocalDateTime;
 
@@ -22,7 +24,9 @@ public class ExhibitionResponse {
     private LocalDateTime endTime;
     private String location;
     private long price;
-    private long imageId;
+
+    @JsonIgnore
+    private Long imageId;
 
     public static ExhibitionResponse toDto(Exhibition exhibition) {
         return new ExhibitionResponse(
@@ -33,7 +37,7 @@ public class ExhibitionResponse {
                 exhibition.getEndTime(),
                 exhibition.getLocation(),
                 exhibition.getPrice(),
-                exhibition.getImage().getId()
+                exhibition.getImage() != null ? exhibition.getImage().getId() : null
         );
     }
 }

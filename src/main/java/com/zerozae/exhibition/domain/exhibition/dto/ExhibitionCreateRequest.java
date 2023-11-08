@@ -4,6 +4,7 @@ import com.zerozae.exhibition.domain.exhibition.entity.Exhibition;
 import com.zerozae.exhibition.domain.file.entity.Image;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.Min;
@@ -34,6 +35,7 @@ public record ExhibitionCreateRequest(
         @NotNull(message = "가격은 필수 항목입니다.")
         Long price,
 
+        @Nullable
         MultipartFile image
 ) {
     public Exhibition toEntity(String uniqueName) {
