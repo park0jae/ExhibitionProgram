@@ -18,9 +18,3 @@ spring:
   sql:
     init:
       mode: always
-
-
-logging.level:
-  org.hibernate.SQL: debug
-  org.springframework.jdbc: debug
-
