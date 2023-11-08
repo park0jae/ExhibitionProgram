@@ -24,8 +24,6 @@ public class ExhibitionResponse {
     private LocalDateTime endTime;
     private String location;
     private long price;
-
-    @JsonIgnore
     private Long imageId;
 
     public static ExhibitionResponse toDto(Exhibition exhibition) {
