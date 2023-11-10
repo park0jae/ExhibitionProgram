@@ -78,5 +78,4 @@ public class MemberService {
             throw new DuplicateMemberException();
         }
     }
-
 }
