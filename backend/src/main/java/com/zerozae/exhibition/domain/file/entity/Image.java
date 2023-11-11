@@ -46,7 +46,7 @@ public class Image {
         return UUID.randomUUID() + "." + ext;
     }
 
-    private String getExt(String originName) {
+    public String getExt(String originName) {
         try {
             String ext = originName.substring(originName.lastIndexOf(".") + 1);
             if (supportFormat(ext)) {

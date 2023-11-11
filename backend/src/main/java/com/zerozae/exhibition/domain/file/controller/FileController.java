@@ -24,15 +24,16 @@ public class FileController {
 
     @GetMapping("/api/v1/images/{imageId}")
     public ResponseEntity<byte[]> getImage(@PathVariable Long imageId) throws IOException {
-
         Image image = fileService.findImageById(imageId);
         String imageName = image.getUniqueName();
+        String ext = image.getExt(image.getOriginName());
 
         Resource resource = new FileSystemResource(fileService.getFilePath() + imageName);
         byte[] imageBytes = FileCopyUtils.copyToByteArray(resource.getInputStream());
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_JPEG);
+        MediaType mediaType = MediaType.parseMediaType("image/" + ext);
+        headers.setContentType(mediaType);
         return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
     }
 }
