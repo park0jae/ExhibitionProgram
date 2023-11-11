@@ -5,6 +5,7 @@ import com.zerozae.exhibition.domain.file.entity.Image;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.persistence.CascadeType;
@@ -32,7 +33,7 @@ public class Exhibition {
     @Column(name = "exhibition_name")
     private String exhibitionName;
 
-    @Lob
+    @Column(nullable = false, length = 500)
     private String description;
 
     @Column(nullable = false)

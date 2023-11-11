@@ -14,6 +14,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "JOIN FETCH r.member m " +
             "JOIN FETCH r.exhibition e " +
             "WHERE (:email IS NULL OR m.email = :email) " +
-            "AND (:name IS NULL OR e.exhibitionName = :exhibitionName)")
+            "AND (:exhibitionName IS NULL OR e.exhibitionName = :exhibitionName)")
     List<Reservation> findReservationByCondition(@Param("email") String email, @Param("exhibitionName") String exhibitionName);
 }

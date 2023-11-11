@@ -17,6 +17,8 @@ public record ExhibitionCreateRequest(
         @Length(min = 2, max = 30, message = "전시회명은 최소 2자, 최대 30자로 설정할 수 있습니다.")
         @NotBlank(message = "전시회명은 필수 항목입니다.")
         String exhibitionName,
+
+        @NotBlank(message = "전시회에 대한 설명은 필수 항목입니다.")
         String description,
 
         @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
