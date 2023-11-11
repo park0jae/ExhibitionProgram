@@ -30,13 +30,17 @@ public class ReservationService {
     private final ExhibitionRepository exhibitionRepository;
 
     public ReservationResponse createReservation(ReservationCreateRequest reservationCreateRequest) {
-        Member member = memberRepository.findByEmail(reservationCreateRequest.email()).orElseThrow(MemberNotFoundException::new);
-        Exhibition exhibition = exhibitionRepository.findByExhibitionName(reservationCreateRequest.exhibitionName()).orElseThrow(ExhibitionNotFoundException::new);
+        Member member = memberRepository.findByEmail(reservationCreateRequest.email())
+                .orElseThrow(MemberNotFoundException::new);
+
+        Exhibition exhibition = exhibitionRepository.findByExhibitionName(reservationCreateRequest.exhibitionName())
+                .orElseThrow(ExhibitionNotFoundException::new);
 
         if(!exhibitionRepository.isExistBetweenStartAndEndTime(exhibition.getId(), reservationCreateRequest.reservationTime())){
             throw new ImpossibleReservationException();
         }
-        Reservation savedReservation = reservationRepository.save(new Reservation(reservationCreateRequest.reservationTime(), member, exhibition));
+        Reservation reservation = new Reservation(reservationCreateRequest.reservationTime(), member, exhibition);
+        Reservation savedReservation = reservationRepository.save(reservation);
         return ReservationResponse.toDto(savedReservation);
     }
 
@@ -54,6 +58,12 @@ public class ReservationService {
 
     @Transactional(readOnly = true)
     public List<ReservationResponse> findReservationByCondition(ReservationCondition reservationCondition) {
+        if(reservationCondition.email() != null){
+            memberRepository.findByEmail(reservationCondition.email()).orElseThrow(MemberNotFoundException::new);
+        }
+        if(reservationCondition.exhibitionName() != null){
+            exhibitionRepository.findByExhibitionName(reservationCondition.exhibitionName()).orElseThrow(ExhibitionNotFoundException::new);
+        }
         List<Reservation> reservations = reservationRepository.findReservationByCondition(
                 reservationCondition.email(),
                 reservationCondition.exhibitionName());

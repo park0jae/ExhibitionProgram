@@ -28,7 +28,7 @@ public class FileController {
         Image image = fileService.findImageById(imageId);
         String imageName = image.getUniqueName();
 
-        Resource resource = new FileSystemResource(fileService.getFilePath() + imageName); // 웹 애플리케이션 내의 경로를 사용
+        Resource resource = new FileSystemResource(fileService.getFilePath() + imageName);
         byte[] imageBytes = FileCopyUtils.copyToByteArray(resource.getInputStream());
 
         HttpHeaders headers = new HttpHeaders();

@@ -9,7 +9,6 @@ const Detail = () => {
     const [exhibitionImage, setExhibitionImage] = useState();
     const [exhibi, setExhibi] = useState(null);
     const location = useLocation();
-
     
     const getExhibition = async() => {
         axios.get(`http://localhost:8080/api/v1/exhibitions/${exhibitionId}`)
@@ -19,13 +18,10 @@ const Detail = () => {
         })
     }
 
-  
-
     useEffect(() => {
         getExhibition();
     }, [exhibitionId]);
 
-    
     return (
         exhibi ?
         <div>
