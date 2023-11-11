@@ -6,7 +6,6 @@ import NavigationBar from './NavigationBar';
 export default function Search()
 {
     const [data, setData] = useState();
-
     
     useEffect(()=>{
         axios.get('http://localhost:8080/api/v1/reservations')

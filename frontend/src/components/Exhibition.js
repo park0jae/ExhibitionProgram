@@ -35,7 +35,6 @@ export function Exhibition(props) {
     setImageUrl(await getImage(imageId));
   }, [imageId]);
 
-
   return <>
     <div style={{display: 'flex', alignItems: 'center', width: '100%'}}>
       <img src={imageUrl} />
