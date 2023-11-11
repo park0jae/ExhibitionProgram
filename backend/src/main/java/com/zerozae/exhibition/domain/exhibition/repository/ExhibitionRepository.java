@@ -14,7 +14,7 @@ public interface ExhibitionRepository extends JpaRepository<Exhibition, Long> {
     Optional<Exhibition> findByExhibitionName(String exhibitionName);
 
     @Query("SELECT e FROM Exhibition e " +
-            "WHERE (:exhibitionName IS NULL OR e.exhibitionName LIKE :exhibitionName) " +
+            "WHERE (:exhibitionName IS NULL OR e.exhibitionName LIKE %:exhibitionName%) " +
             "AND (:exhibitionTime IS NULL OR :exhibitionTime BETWEEN e.startTime AND e.endTime)")
     List<Exhibition> findAllByCondition(@Param("exhibitionName") String exhibitionName,
                                         @Param("exhibitionTime") LocalDateTime exhibitionTime);
