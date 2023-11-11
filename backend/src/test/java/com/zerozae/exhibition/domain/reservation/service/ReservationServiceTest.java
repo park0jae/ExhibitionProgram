@@ -152,6 +152,7 @@ class ReservationServiceTest {
     void 예약자_이메일로_예약_조회_테스트() {
         // Given
         ReservationCondition condition = new ReservationCondition(member.getEmail(), null);
+        given(memberRepository.findByEmail(condition.email())).willReturn(Optional.of(member));
         given(reservationRepository.findReservationByCondition(condition.email(), condition.exhibitionName())).willReturn(List.of(reservation));
 
         // When
@@ -167,6 +168,7 @@ class ReservationServiceTest {
     void 전시회_이름으로_예약_조회_테스트() {
         // Given
         ReservationCondition condition = new ReservationCondition(null, exhibition.getExhibitionName());
+        given(exhibitionRepository.findByExhibitionName(condition.exhibitionName())).willReturn(Optional.of(exhibition));
         given(reservationRepository.findReservationByCondition(condition.email(), condition.exhibitionName())).willReturn(List.of(reservation));
 
         // When
