@@ -11,8 +11,6 @@ import com.zerozae.exhibition.domain.reservation.exception.ImpossibleReservation
 import com.zerozae.exhibition.domain.reservation.exception.ReservationNotFoundException;
 import com.zerozae.exhibition.global.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,102 +27,91 @@ public class ExceptionAdvisor {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(INTERNAL_SERVER_ERROR)
-    protected ResponseEntity<ErrorResponse> exceptionMessage(Exception e){
+    protected ErrorResponse exceptionMessage(Exception e){
         log.error("Error Message ={}", e.getMessage());
-        HttpStatus status = INTERNAL_SERVER_ERROR;
-        ErrorResponse errorResponse = new ErrorResponse(status.value(), e.getMessage(), status.name());
-        return ErrorResponse.toResponseEntity(errorResponse);
+        ErrorResponse errorResponse = new ErrorResponse(INTERNAL_SERVER_ERROR.name(), e.getMessage());
+        return errorResponse;
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(BAD_REQUEST)
-    protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    protected ErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
         String errorMessage = Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage();
-        HttpStatus status = BAD_REQUEST;
-        ErrorResponse errorResponse = new ErrorResponse(status.value(), e.getMessage(), status.name());
+        ErrorResponse errorResponse = new ErrorResponse(BAD_REQUEST.name(), e.getMessage());
         log.warn("Error Message = {}", errorMessage);
-        return ErrorResponse.toResponseEntity(errorResponse);
+        return errorResponse;
     }
 
     @ExceptionHandler(MemberNotFoundException.class)
     @ResponseStatus(NOT_FOUND)
-    protected ResponseEntity<ErrorResponse> memberNotFoundException(MemberNotFoundException e) {
-        HttpStatus status = NOT_FOUND;
-        ErrorResponse errorResponse = new ErrorResponse(status.value(), status.name(), "회원을 찾을 수 없습니다.");
+    protected ErrorResponse memberNotFoundException(MemberNotFoundException e) {
+        ErrorResponse errorResponse = new ErrorResponse(NOT_FOUND.name(), "회원을 찾을 수 없습니다.");
         log.warn("Error Message = {}", errorResponse.message());
-        return ErrorResponse.toResponseEntity(errorResponse);
+        return errorResponse;
     }
 
     @ExceptionHandler(ReservationNotFoundException.class)
     @ResponseStatus(NOT_FOUND)
-    protected ResponseEntity<ErrorResponse> reservationNotFoundException(ReservationNotFoundException e) {
-        HttpStatus status = NOT_FOUND;
-        ErrorResponse errorResponse = new ErrorResponse(status.value(), status.name() , "예약을 찾을 수 없습니다.");
+    protected ErrorResponse reservationNotFoundException(ReservationNotFoundException e) {
+        ErrorResponse errorResponse = new ErrorResponse(NOT_FOUND.name() , "예약을 찾을 수 없습니다.");
         log.warn("Error Message = {}", errorResponse.message());
-        return ErrorResponse.toResponseEntity(errorResponse);
+        return errorResponse;
     }
 
     @ExceptionHandler(ExhibitionNotFoundException.class)
     @ResponseStatus(NOT_FOUND)
-    protected ResponseEntity<ErrorResponse> exhibitionNotFoundException(ExhibitionNotFoundException e) {
-        HttpStatus status = NOT_FOUND;
-        ErrorResponse errorResponse = new ErrorResponse(status.value(), status.name(), "전시회를 찾을 수 없습니다.");
+    protected ErrorResponse exhibitionNotFoundException(ExhibitionNotFoundException e) {
+        ErrorResponse errorResponse = new ErrorResponse(NOT_FOUND.name(), "전시회를 찾을 수 없습니다.");
         log.warn("Error Message = {}", errorResponse.message());
-        return ErrorResponse.toResponseEntity(errorResponse);
+        return errorResponse;
     }
 
     @ExceptionHandler(DuplicateMemberException.class)
     @ResponseStatus(CONFLICT)
-    protected ResponseEntity<ErrorResponse> duplicateMemberException(DuplicateMemberException e) {
-        HttpStatus status = CONFLICT;
-        ErrorResponse errorResponse = new ErrorResponse(status.value(), status.name(), "이미 존재하는 회원입니다.");
+    protected ErrorResponse duplicateMemberException(DuplicateMemberException e) {
+        ErrorResponse errorResponse = new ErrorResponse(CONFLICT.name(), "이미 존재하는 회원입니다.");
         log.warn("Error Message = {}", errorResponse.message());
-        return ErrorResponse.toResponseEntity(errorResponse);
+        return errorResponse;
     }
 
     @ExceptionHandler(DuplicateExhibitionException.class)
     @ResponseStatus(CONFLICT)
-    protected ResponseEntity<ErrorResponse> duplicateExhibitionException(DuplicateExhibitionException e) {
-        HttpStatus status = CONFLICT;
-        ErrorResponse errorResponse = new ErrorResponse(status.value(), status.name(), "이미 존재하는 전시회입니다.");
+    protected ErrorResponse duplicateExhibitionException(DuplicateExhibitionException e) {
+        ErrorResponse errorResponse = new ErrorResponse(CONFLICT.name(), "이미 존재하는 전시회입니다.");
         log.warn("Error Message = {}", errorResponse.message());
-        return ErrorResponse.toResponseEntity(errorResponse);
+        return errorResponse;
     }
 
     @ExceptionHandler(ImpossibleReservationException.class)
     @ResponseStatus(BAD_REQUEST)
-    protected ResponseEntity<ErrorResponse> ImpossibleReservationException(ImpossibleReservationException e) {
-        HttpStatus status = BAD_REQUEST;
-        ErrorResponse errorResponse = new ErrorResponse(status.value(), status.name(), "예약이 불가능한 시간대입니다.");
+    protected ErrorResponse ImpossibleReservationException(ImpossibleReservationException e) {
+        ErrorResponse errorResponse = new ErrorResponse(BAD_REQUEST.name(), "예약이 불가능한 시간대입니다.");
         log.warn("Error Message = {}", errorResponse.message());
-        return ErrorResponse.toResponseEntity(errorResponse);
+        return errorResponse;
     }
 
     @ExceptionHandler(UnSupportExtException.class)
     @ResponseStatus(UNSUPPORTED_MEDIA_TYPE)
-    protected ResponseEntity<ErrorResponse> unSupportExtException(UnSupportExtException e) {
-        HttpStatus status = UNSUPPORTED_MEDIA_TYPE;
-        ErrorResponse errorResponse = new ErrorResponse(status.value(), status.name(), "지원하지 않는 미디어 타입입니다.");
+    protected ErrorResponse unSupportExtException(UnSupportExtException e) {
+        ErrorResponse errorResponse = new ErrorResponse(UNSUPPORTED_MEDIA_TYPE.name(), "지원하지 않는 미디어 타입입니다.");
         log.warn("Error Message = {}", errorResponse.message());
-        return ErrorResponse.toResponseEntity(errorResponse);
+        return errorResponse;
     }
 
     @ExceptionHandler(NoExtException.class)
     @ResponseStatus(BAD_REQUEST)
-    protected ResponseEntity<ErrorResponse> noExtException(NoExtException e) {
-        HttpStatus status = BAD_REQUEST;
-        ErrorResponse errorResponse = new ErrorResponse(status.value(), status.name(), "업로드한 파일의 확장자를 찾을 수 없습니다.");
+    protected ErrorResponse noExtException(NoExtException e) {
+        ErrorResponse errorResponse = new ErrorResponse(BAD_REQUEST.name(), "업로드한 파일의 확장자를 찾을 수 없습니다.");
         log.warn("Error Message = {}", errorResponse.message());
-        return ErrorResponse.toResponseEntity(errorResponse);
+        return errorResponse;
     }
 
     @ExceptionHandler(ImageNotFoundException.class)
     @ResponseStatus(NOT_FOUND)
-    protected ResponseEntity<ErrorResponse> imageNotFoundException(ImageNotFoundException e) {
-        HttpStatus status = NOT_FOUND;
-        ErrorResponse errorResponse = new ErrorResponse(status.value(), status.name(), "이미지를 찾을 수 없습니다.");
+    protected ErrorResponse imageNotFoundException(ImageNotFoundException e) {
+        ErrorResponse errorResponse = new ErrorResponse(NOT_FOUND.name(), "이미지를 찾을 수 없습니다.");
         log.warn("Error Message = {}", errorResponse.message());
-        return ErrorResponse.toResponseEntity(errorResponse);
+        return errorResponse;
     }
 }
