@@ -27,6 +27,7 @@ npm start
 
 
 ## 프로젝트 일부 화면
-![img.png](img.png)
-![img_1.png](img_1.png)
-![img_2.png](img_2.png)
+<img width="1920" alt="image" src="https://github.com/park0jae/react-springboot-rest-api/assets/84398970/938bd075-4af3-42ff-aee5-71d6bc4300b7">
+<img width="1919" alt="image" src="https://github.com/park0jae/react-springboot-rest-api/assets/84398970/24c22219-671a-4abf-8a96-85620022c745">
+<img width="1918" alt="image" src="https://github.com/park0jae/react-springboot-rest-api/assets/84398970/a8a93472-d665-4097-9114-63111bd500fd">
+<img width="1919" alt="image" src="https://github.com/park0jae/react-springboot-rest-api/assets/84398970/9d9e3869-ebd0-4e17-9395-acb9a42e2f2d">
